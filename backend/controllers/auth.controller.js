@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken.js';
+import handleError from '../utils/middlewares/handleError.js';
 
 export const signup = async (req, res) => {
 
@@ -9,17 +10,13 @@ export const signup = async (req, res) => {
         const { fullName, username, password, confirmPassword, gender } = req.body;
 
         if (password !== confirmPassword) {
-            return res.status(400).json({
-                message: "Password do not match"
-            })
+            handleError(res, { status: 400, msg: "Passwords do not match" });
         }
 
         const user = await User.findOne({ username });
 
         if (user) {
-            return res.status(400).json({
-                message: "User already exists"
-            })
+            handleError(res, { status: 400, msg: "User already exists" });
         }
 
         const salt = await bcrypt.genSalt(12);
@@ -54,17 +51,13 @@ export const signup = async (req, res) => {
 
         else {
 
-            res.status(400).json({
-                message: "Invalid user data"
-            })
+            handleError(res, { status: 400, msg: "Invalid User Data" });
         }
 
     } catch (err) {
 
         console.log('Error in signup controller: ', err.message);
-        res.status(500).json({
-            error: 'Internal server error'
-        })
+        handleError(res, { status: 500, msg: "Internal server error" });
     }
 }
 
@@ -76,16 +69,12 @@ export const login = async (req, res) => {
         const user = await User.findOne({ username });
 
         if (!user) {
-            return res.status(400).json({
-                message: "Invalid credentials"
-            })
+            handleError(res, { status: 400, msg: "Invalid credentials" });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user?.password || "");
         if (!isPasswordValid) {
-            return res.status(400).json({
-                message: "Invalid credentials"
-            })
+            handleError(res, { status: 400, msg: "Invalid credentials" });
         }
 
         res.status(200).json({
@@ -98,9 +87,7 @@ export const login = async (req, res) => {
     } catch (err) {
 
         console.log('Error in login controller: ', err.message);
-        res.status(500).json({
-            error: 'Internal server error'
-        })
+        handleError(res, { status: 500, msg: "Internal server error" });
     }
 }
 
