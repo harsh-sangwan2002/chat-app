@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 import connect from './db/connect.js';
 import authRouter from './routes/auth.route.js';
@@ -8,6 +9,7 @@ const app = express();
 
 // middleware to parse incoming requests with JSON payloads
 app.use(express.json()); 
+app.use(cookieParser());
 
 dotenv.config();
 
