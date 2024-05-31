@@ -1,0 +1,21 @@
+export default {
+    CONTENT:{
+        TYPE:{
+            JSON:'application/json',
+        }
+    },
+    STATUS_CODES:{
+        SUCCESS:200,
+        REDIRECT:302,
+        FILE_NOT_FOUND:404,
+        SERVER_ERROR:500,
+    },
+    ROUTES:{
+        BASE:'/',
+        USER:{
+            LOGIN:'/login',
+            REGISTER:'/register',
+            LOGOUT:'/logout',
+        }
+    }
+}

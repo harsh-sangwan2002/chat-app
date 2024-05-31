@@ -4,23 +4,22 @@ import cookieParser from 'cookie-parser';
 
 import connect from './db/connect.js';
 import authRouter from './routes/auth.route.js';
+import notFound from './utils/middlewares/404.js';
 
 const app = express();
 
 // middleware to parse incoming requests with JSON payloads
-app.use(express.json()); 
+app.use(express.json());
 app.use(cookieParser());
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
+app.use('/api/auth', authRouter);
 
-    res.send('Server said hello');
-})
-
-app.use('/api/auth',authRouter);
+// 404
+app.use(notFound);
 
 app.listen(PORT, () => {
 
