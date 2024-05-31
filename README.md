@@ -15,7 +15,6 @@ Check out the live demo of this app [here]().
 - Notifications: Get notified of new messages and activity.
 - User Profiles: Customize your profile with a photo and status message.
 - Responsive Design: Optimized for all devices with a modern, user-friendly interface.
-```
 
 ## Technologies Used
 
